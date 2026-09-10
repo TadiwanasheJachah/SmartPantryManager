@@ -45,8 +45,27 @@ public class MainActivity extends AppCompatActivity {
         btnSettings = findViewById(R.id.btnSettings);
 
         btnPantry.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, PantryActivity.class);
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    PantryActivity.class
+            );
+
             startActivity(intent);
+        });
+
+        btnRecipes.setOnClickListener(view -> {
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    RecipesActivity.class
+            );
+
+            startActivity(intent);
+        });
+
+        btnSettings.setOnClickListener(view -> {
+            // Settings screen will be connected later.
         });
     }
 }
