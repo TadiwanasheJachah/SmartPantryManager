@@ -1,12 +1,9 @@
 package com.example.smartpantrymanager;
 
-import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,73 +12,54 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class PantryActivity extends AppCompatActivity {
 
-    private EditText etIngredientName;
-    private EditText etQuantity;
-    private EditText etExpiryDate;
-    private Spinner spUnit;
     private Button btnAddIngredient;
     private TextView tvEmptyPantry;
     private RecyclerView recyclerPantry;
 
-    private AppDatabase database;
     private PantryDao pantryDao;
     private PantryAdapter pantryAdapter;
-
-    // If this is null, we are adding a new ingredient.
-    // If it contains an item, we are editing that ingredient.
-    private PantryItem itemBeingEdited = null;
-
-    private final String[] units = {
-            "Choose unit",
-            "kg",
-            "g",
-            "L",
-            "ml",
-            "pieces"
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantry);
 
-        etIngredientName = findViewById(R.id.etIngredientName);
-        etQuantity = findViewById(R.id.etQuantity);
-        etExpiryDate = findViewById(R.id.etExpiryDate);
-        spUnit = findViewById(R.id.spUnit);
         btnAddIngredient = findViewById(R.id.btnAddIngredient);
         tvEmptyPantry = findViewById(R.id.tvEmptyPantry);
         recyclerPantry = findViewById(R.id.recyclerPantry);
 
-        database = AppDatabase.getInstance(this);
+        AppDatabase database =
+                AppDatabase.getInstance(this);
+
         pantryDao = database.pantryDao();
 
-        setupUnitSpinner();
         setupRecyclerView();
-        setupExpiryDatePicker();
         loadPantryItems();
 
-        btnAddIngredient.setOnClickListener(view -> saveIngredient());
+        btnAddIngredient.setOnClickListener(view -> {
+
+            Intent intent = new Intent(
+                    PantryActivity.this,
+                    AddEditIngredientActivity.class
+            );
+
+            startActivity(intent);
+        });
     }
 
-    private void setupUnitSpinner() {
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                units
-        );
+        if (pantryDao != null
+                && pantryAdapter != null) {
 
-        unitAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
-        );
-
-        spUnit.setAdapter(unitAdapter);
+            loadPantryItems();
+        }
     }
 
     private void setupRecyclerView() {
@@ -96,182 +74,31 @@ public class PantryActivity extends AppCompatActivity {
 
                     @Override
                     public void onEdit(PantryItem item) {
-                        startEditing(item);
+
+                        Intent intent = new Intent(
+                                PantryActivity.this,
+                                AddEditIngredientActivity.class
+                        );
+
+                        intent.putExtra(
+                                "ingredient_id",
+                                item.getId()
+                        );
+
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onDelete(PantryItem item) {
+
                         confirmDelete(item);
                     }
                 }
         );
 
-        recyclerPantry.setAdapter(pantryAdapter);
-    }
-
-    private void setupExpiryDatePicker() {
-
-        etExpiryDate.setFocusable(false);
-        etExpiryDate.setClickable(true);
-
-        etExpiryDate.setOnClickListener(view -> {
-
-            Calendar calendar = Calendar.getInstance();
-
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog =
-                    new DatePickerDialog(
-                            PantryActivity.this,
-                            (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-
-                                String selectedDate =
-                                        selectedDay
-                                                + "/"
-                                                + (selectedMonth + 1)
-                                                + "/"
-                                                + selectedYear;
-
-                                etExpiryDate.setText(selectedDate);
-                            },
-                            year,
-                            month,
-                            day
-                    );
-
-            datePickerDialog.show();
-        });
-    }
-
-    private void saveIngredient() {
-
-        String ingredientName =
-                etIngredientName.getText().toString().trim();
-
-        String quantityText =
-                etQuantity.getText().toString().trim();
-
-        String unit =
-                spUnit.getSelectedItem().toString();
-
-        String expiryDate =
-                etExpiryDate.getText().toString().trim();
-
-        if (ingredientName.isEmpty()) {
-            etIngredientName.setError("Ingredient name is required");
-            etIngredientName.requestFocus();
-            return;
-        }
-
-        if (quantityText.isEmpty()) {
-            etQuantity.setError("Quantity is required");
-            etQuantity.requestFocus();
-            return;
-        }
-
-        double quantity;
-
-        try {
-            quantity = Double.parseDouble(quantityText);
-        } catch (NumberFormatException e) {
-            etQuantity.setError("Enter a valid quantity");
-            etQuantity.requestFocus();
-            return;
-        }
-
-        if (quantity <= 0) {
-            etQuantity.setError("Quantity must be greater than zero");
-            etQuantity.requestFocus();
-            return;
-        }
-
-        if (unit.equals("Choose unit")) {
-            Toast.makeText(
-                    this,
-                    "Please choose a unit",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
-        }
-
-        if (itemBeingEdited == null) {
-
-            // CREATE
-            PantryItem newItem = new PantryItem(
-                    ingredientName,
-                    quantity,
-                    unit,
-                    expiryDate
-            );
-
-            pantryDao.insert(newItem);
-
-            Toast.makeText(
-                    this,
-                    "Ingredient saved",
-                    Toast.LENGTH_SHORT
-            ).show();
-
-        } else {
-
-            // UPDATE
-            itemBeingEdited.setName(ingredientName);
-            itemBeingEdited.setQuantity(quantity);
-            itemBeingEdited.setUnit(unit);
-            itemBeingEdited.setExpiryDate(expiryDate);
-
-            pantryDao.update(itemBeingEdited);
-
-            Toast.makeText(
-                    this,
-                    "Ingredient updated",
-                    Toast.LENGTH_SHORT
-            ).show();
-
-            itemBeingEdited = null;
-            btnAddIngredient.setText("Add Ingredient");
-        }
-
-        clearForm();
-        loadPantryItems();
-    }
-
-    private void startEditing(PantryItem item) {
-
-        itemBeingEdited = item;
-
-        etIngredientName.setText(item.getName());
-
-        if (item.getQuantity() == (long) item.getQuantity()) {
-            etQuantity.setText(
-                    String.valueOf((long) item.getQuantity())
-            );
-        } else {
-            etQuantity.setText(
-                    String.valueOf(item.getQuantity())
-            );
-        }
-
-        etExpiryDate.setText(item.getExpiryDate());
-
-        for (int i = 0; i < units.length; i++) {
-            if (units[i].equals(item.getUnit())) {
-                spUnit.setSelection(i);
-                break;
-            }
-        }
-
-        btnAddIngredient.setText("Update Ingredient");
-
-        etIngredientName.requestFocus();
-
-        Toast.makeText(
-                this,
-                "Edit the ingredient and tap Update Ingredient",
-                Toast.LENGTH_SHORT
-        ).show();
+        recyclerPantry.setAdapter(
+                pantryAdapter
+        );
     }
 
     private void loadPantryItems() {
@@ -279,14 +106,29 @@ public class PantryActivity extends AppCompatActivity {
         List<PantryItem> pantryItems =
                 pantryDao.getAllPantryItems();
 
-        pantryAdapter.setPantryItems(pantryItems);
+        pantryAdapter.setPantryItems(
+                pantryItems
+        );
 
         if (pantryItems.isEmpty()) {
-            tvEmptyPantry.setVisibility(View.VISIBLE);
-            recyclerPantry.setVisibility(View.GONE);
+
+            tvEmptyPantry.setVisibility(
+                    View.VISIBLE
+            );
+
+            recyclerPantry.setVisibility(
+                    View.GONE
+            );
+
         } else {
-            tvEmptyPantry.setVisibility(View.GONE);
-            recyclerPantry.setVisibility(View.VISIBLE);
+
+            tvEmptyPantry.setVisibility(
+                    View.GONE
+            );
+
+            recyclerPantry.setVisibility(
+                    View.VISIBLE
+            );
         }
     }
 
@@ -299,35 +141,25 @@ public class PantryActivity extends AppCompatActivity {
                                 + item.getName()
                                 + "?"
                 )
-                .setPositiveButton("Delete", (dialog, which) -> {
+                .setPositiveButton(
+                        "Delete",
+                         (dialog, which) -> {
 
-                    pantryDao.delete(item);
+                            pantryDao.delete(item);
 
-                    if (itemBeingEdited != null
-                            && itemBeingEdited.getId() == item.getId()) {
+                            Toast.makeText(
+                                    PantryActivity.this,
+                                    "Ingredient deleted",
+                                    Toast.LENGTH_SHORT
+                            ).show();
 
-                        itemBeingEdited = null;
-                        clearForm();
-                        btnAddIngredient.setText("Add Ingredient");
-                    }
-
-                    Toast.makeText(
-                            PantryActivity.this,
-                            "Ingredient deleted",
-                            Toast.LENGTH_SHORT
-                    ).show();
-
-                    loadPantryItems();
-                })
-                .setNegativeButton("Cancel", null)
+                            loadPantryItems();
+                        }
+                )
+                .setNegativeButton(
+                        "Cancel",
+                        null
+                )
                 .show();
-    }
-
-    private void clearForm() {
-
-        etIngredientName.setText("");
-        etQuantity.setText("");
-        etExpiryDate.setText("");
-        spUnit.setSelection(0);
     }
 }
