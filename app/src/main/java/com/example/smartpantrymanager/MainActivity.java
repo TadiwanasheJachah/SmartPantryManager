@@ -40,12 +40,13 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        // Connect buttons
         btnPantry = findViewById(R.id.btnPantry);
         btnRecipes = findViewById(R.id.btnRecipes);
         btnSettings = findViewById(R.id.btnSettings);
 
+        // Open Pantry screen
         btnPantry.setOnClickListener(view -> {
-
             Intent intent = new Intent(
                     MainActivity.this,
                     PantryActivity.class
@@ -54,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Open Suggested Recipes screen
         btnRecipes.setOnClickListener(view -> {
-
             Intent intent = new Intent(
                     MainActivity.this,
                     RecipesActivity.class
@@ -64,8 +65,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Open Settings screen
         btnSettings.setOnClickListener(view -> {
-            // Settings screen will be connected later.
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    SettingsActivity.class
+            );
+
+            startActivity(intent);
         });
     }
 }
