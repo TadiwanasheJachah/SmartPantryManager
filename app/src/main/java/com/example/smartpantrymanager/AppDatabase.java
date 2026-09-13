@@ -7,28 +7,35 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(
-        entities = {PantryItem.class},
-        version = 1,
+        entities = {
+                PantryItem.class,
+                RecipeEntity.class
+        },
+        version = 2,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
 
-    private static AppDatabase INSTANCE;
+    private static AppDatabase instance;
 
     public abstract PantryDao pantryDao();
 
+    public abstract RecipeDao recipeDao();
+
     public static synchronized AppDatabase getInstance(Context context) {
 
-        if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(
+        if (instance == null) {
+
+            instance = Room.databaseBuilder(
                             context.getApplicationContext(),
                             AppDatabase.class,
                             "smart_pantry_database"
                     )
+                    .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .build();
         }
 
-        return INSTANCE;
+        return instance;
     }
 }

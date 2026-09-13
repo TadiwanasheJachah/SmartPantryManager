@@ -40,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        // Open the Room database
+        AppDatabase database =
+                AppDatabase.getInstance(this);
+
+        // Insert the starter recipes only if the recipe table is empty
+        RecipeSeeder.seedRecipes(database);
+
         // Connect buttons
         btnPantry = findViewById(R.id.btnPantry);
         btnRecipes = findViewById(R.id.btnRecipes);
@@ -47,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Open Pantry screen
         btnPantry.setOnClickListener(view -> {
+
             Intent intent = new Intent(
                     MainActivity.this,
                     PantryActivity.class
@@ -57,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Open Suggested Recipes screen
         btnRecipes.setOnClickListener(view -> {
+
             Intent intent = new Intent(
                     MainActivity.this,
                     RecipesActivity.class
@@ -67,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Open Settings screen
         btnSettings.setOnClickListener(view -> {
+
             Intent intent = new Intent(
                     MainActivity.this,
                     SettingsActivity.class
