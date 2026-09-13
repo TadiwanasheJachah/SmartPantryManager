@@ -1,5 +1,6 @@
 package com.example.smartpantrymanager;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class PantryActivity extends AppCompatActivity {
@@ -61,6 +63,7 @@ public class PantryActivity extends AppCompatActivity {
 
         setupUnitSpinner();
         setupRecyclerView();
+        setupExpiryDatePicker();
         loadPantryItems();
 
         btnAddIngredient.setOnClickListener(view -> saveIngredient());
@@ -104,6 +107,42 @@ public class PantryActivity extends AppCompatActivity {
         );
 
         recyclerPantry.setAdapter(pantryAdapter);
+    }
+
+    private void setupExpiryDatePicker() {
+
+        etExpiryDate.setFocusable(false);
+        etExpiryDate.setClickable(true);
+
+        etExpiryDate.setOnClickListener(view -> {
+
+            Calendar calendar = Calendar.getInstance();
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog =
+                    new DatePickerDialog(
+                            PantryActivity.this,
+                            (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+
+                                String selectedDate =
+                                        selectedDay
+                                                + "/"
+                                                + (selectedMonth + 1)
+                                                + "/"
+                                                + selectedYear;
+
+                                etExpiryDate.setText(selectedDate);
+                            },
+                            year,
+                            month,
+                            day
+                    );
+
+            datePickerDialog.show();
+        });
     }
 
     private void saveIngredient() {
@@ -264,8 +303,6 @@ public class PantryActivity extends AppCompatActivity {
 
                     pantryDao.delete(item);
 
-                    // If the item currently being edited is deleted,
-                    // return the form to Add mode.
                     if (itemBeingEdited != null
                             && itemBeingEdited.getId() == item.getId()) {
 

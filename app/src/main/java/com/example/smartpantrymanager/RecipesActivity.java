@@ -193,11 +193,13 @@ public class RecipesActivity extends AppCompatActivity {
 
         for (PantryItem pantryItem : pantryItems) {
 
+            String normalizedName =
+                    normalizeIngredient(
+                            pantryItem.getName()
+                    );
+
             pantryIngredientNames.add(
-                    pantryItem
-                            .getName()
-                            .trim()
-                            .toLowerCase()
+                    normalizedName
             );
         }
 
@@ -205,7 +207,8 @@ public class RecipesActivity extends AppCompatActivity {
 
         for (Recipe recipe : recipes) {
 
-            if (pantryIngredientNames.containsAll(
+            if (hasAllIngredients(
+                    pantryIngredientNames,
                     recipe.getIngredients()
             )) {
 
@@ -219,6 +222,60 @@ public class RecipesActivity extends AppCompatActivity {
         } else {
             txtNoRecipes.setVisibility(View.GONE);
         }
+    }
+
+    private boolean hasAllIngredients(
+            Set<String> pantryIngredients,
+            List<String> requiredIngredients
+    ) {
+
+        for (String ingredient : requiredIngredients) {
+
+            String normalizedIngredient =
+                    normalizeIngredient(ingredient);
+
+            if (!pantryIngredients.contains(
+                    normalizedIngredient
+            )) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private String normalizeIngredient(String ingredient) {
+
+        if (ingredient == null) {
+            return "";
+        }
+
+        String normalized =
+                ingredient
+                        .trim()
+                        .toLowerCase();
+
+        if (normalized.equals("eggs")) {
+            return "egg";
+        }
+
+        if (normalized.equals("tomatoes")) {
+            return "tomato";
+        }
+
+        if (normalized.equals("potatoes")) {
+            return "potato";
+        }
+
+        if (normalized.equals("bananas")) {
+            return "banana";
+        }
+
+        if (normalized.equals("apples")) {
+            return "apple";
+        }
+
+        return normalized;
     }
 
     private void addRecipeToScreen(Recipe recipe) {
@@ -329,6 +386,7 @@ public class RecipesActivity extends AppCompatActivity {
                 new StringBuilder();
 
         for (String ingredient : recipe.getIngredients()) {
+
             ingredients
                     .append("• ")
                     .append(capitalize(ingredient))
