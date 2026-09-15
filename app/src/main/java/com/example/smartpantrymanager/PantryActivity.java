@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.List;
 
 public class PantryActivity extends AppCompatActivity {
@@ -19,6 +21,7 @@ public class PantryActivity extends AppCompatActivity {
     private Button btnAddIngredient;
     private TextView tvEmptyPantry;
     private RecyclerView recyclerPantry;
+    private BottomNavigationView bottomNavigation;
 
     private PantryDao pantryDao;
     private PantryAdapter pantryAdapter;
@@ -31,22 +34,20 @@ public class PantryActivity extends AppCompatActivity {
         btnAddIngredient = findViewById(R.id.btnAddIngredient);
         tvEmptyPantry = findViewById(R.id.tvEmptyPantry);
         recyclerPantry = findViewById(R.id.recyclerPantry);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
 
-        AppDatabase database =
-                AppDatabase.getInstance(this);
-
+        AppDatabase database = AppDatabase.getInstance(this);
         pantryDao = database.pantryDao();
 
         setupRecyclerView();
+        setupBottomNavigation();
         loadPantryItems();
 
         btnAddIngredient.setOnClickListener(view -> {
-
             Intent intent = new Intent(
                     PantryActivity.this,
                     AddEditIngredientActivity.class
             );
-
             startActivity(intent);
         });
     }
@@ -55,10 +56,12 @@ public class PantryActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (pantryDao != null
-                && pantryAdapter != null) {
-
+        if (pantryDao != null && pantryAdapter != null) {
             loadPantryItems();
+        }
+
+        if (bottomNavigation != null) {
+            bottomNavigation.setSelectedItemId(R.id.navPantry);
         }
     }
 
@@ -90,15 +93,64 @@ public class PantryActivity extends AppCompatActivity {
 
                     @Override
                     public void onDelete(PantryItem item) {
-
                         confirmDelete(item);
                     }
                 }
         );
 
-        recyclerPantry.setAdapter(
-                pantryAdapter
-        );
+        recyclerPantry.setAdapter(pantryAdapter);
+    }
+
+    private void setupBottomNavigation() {
+
+        bottomNavigation.setSelectedItemId(R.id.navPantry);
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.navHome) {
+
+                Intent intent = new Intent(
+                        PantryActivity.this,
+                        MainActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+                return true;
+            }
+
+            if (itemId == R.id.navPantry) {
+                return true;
+            }
+
+            if (itemId == R.id.navRecipes) {
+
+                Intent intent = new Intent(
+                        PantryActivity.this,
+                        RecipesActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+                return true;
+            }
+
+            if (itemId == R.id.navSettings) {
+
+                Intent intent = new Intent(
+                        PantryActivity.this,
+                        SettingsActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+                return true;
+            }
+
+            return false;
+        });
     }
 
     private void loadPantryItems() {
@@ -106,29 +158,14 @@ public class PantryActivity extends AppCompatActivity {
         List<PantryItem> pantryItems =
                 pantryDao.getAllPantryItems();
 
-        pantryAdapter.setPantryItems(
-                pantryItems
-        );
+        pantryAdapter.setPantryItems(pantryItems);
 
         if (pantryItems.isEmpty()) {
-
-            tvEmptyPantry.setVisibility(
-                    View.VISIBLE
-            );
-
-            recyclerPantry.setVisibility(
-                    View.GONE
-            );
-
+            tvEmptyPantry.setVisibility(View.VISIBLE);
+            recyclerPantry.setVisibility(View.GONE);
         } else {
-
-            tvEmptyPantry.setVisibility(
-                    View.GONE
-            );
-
-            recyclerPantry.setVisibility(
-                    View.VISIBLE
-            );
+            tvEmptyPantry.setVisibility(View.GONE);
+            recyclerPantry.setVisibility(View.VISIBLE);
         }
     }
 
@@ -143,7 +180,7 @@ public class PantryActivity extends AppCompatActivity {
                 )
                 .setPositiveButton(
                         "Delete",
-                         (dialog, which) -> {
+                        (dialog, which) -> {
 
                             pantryDao.delete(item);
 
@@ -156,10 +193,7 @@ public class PantryActivity extends AppCompatActivity {
                             loadPantryItems();
                         }
                 )
-                .setNegativeButton(
-                        "Cancel",
-                        null
-                )
+                .setNegativeButton("Cancel", null)
                 .show();
     }
 }

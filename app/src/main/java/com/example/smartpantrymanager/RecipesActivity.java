@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ public class RecipesActivity extends AppCompatActivity {
     private LinearLayout recipeContainer;
     private TextView txtNoRecipes;
     private Button btnBackToPantry;
+    private BottomNavigationView bottomNavigation;
 
     private PantryDao pantryDao;
     private RecipeDao recipeDao;
@@ -30,6 +33,7 @@ public class RecipesActivity extends AppCompatActivity {
         recipeContainer = findViewById(R.id.recipeContainer);
         txtNoRecipes = findViewById(R.id.txtNoRecipes);
         btnBackToPantry = findViewById(R.id.btnBackToPantry);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
 
         AppDatabase database =
                 AppDatabase.getInstance(this);
@@ -37,6 +41,7 @@ public class RecipesActivity extends AppCompatActivity {
         pantryDao = database.pantryDao();
         recipeDao = database.recipeDao();
 
+        setupBottomNavigation();
         showMatchingRecipes();
 
         btnBackToPantry.setOnClickListener(view -> {
@@ -47,6 +52,74 @@ public class RecipesActivity extends AppCompatActivity {
 
             startActivity(intent);
             finish();
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (pantryDao != null && recipeDao != null) {
+            showMatchingRecipes();
+        }
+
+        if (bottomNavigation != null) {
+            bottomNavigation.setSelectedItemId(R.id.navRecipes);
+        }
+    }
+
+    private void setupBottomNavigation() {
+
+        bottomNavigation.setSelectedItemId(R.id.navRecipes);
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.navHome) {
+
+                Intent intent = new Intent(
+                        RecipesActivity.this,
+                        MainActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+
+                return true;
+            }
+
+            if (itemId == R.id.navPantry) {
+
+                Intent intent = new Intent(
+                        RecipesActivity.this,
+                        PantryActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+
+                return true;
+            }
+
+            if (itemId == R.id.navRecipes) {
+                return true;
+            }
+
+            if (itemId == R.id.navSettings) {
+
+                Intent intent = new Intent(
+                        RecipesActivity.this,
+                        SettingsActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+
+                return true;
+            }
+
+            return false;
         });
     }
 

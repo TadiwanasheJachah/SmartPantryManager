@@ -1,5 +1,6 @@
 package com.example.smartpantrymanager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,12 +9,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class SettingsActivity extends AppCompatActivity {
 
     private Switch switchExpiryReminders;
     private Switch switchStrictMatching;
     private Button btnSaveSettings;
     private Button btnBackHome;
+    private BottomNavigationView bottomNavigation;
 
     private SharedPreferences sharedPreferences;
 
@@ -26,7 +30,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        // Connect Java variables to XML views
         switchExpiryReminders =
                 findViewById(R.id.switchExpiryReminders);
 
@@ -39,13 +42,14 @@ public class SettingsActivity extends AppCompatActivity {
         btnBackHome =
                 findViewById(R.id.btnBackHome);
 
-        // Open the app's saved preferences
+        bottomNavigation =
+                findViewById(R.id.bottomNavigation);
+
         sharedPreferences = getSharedPreferences(
                 PREFS_NAME,
                 MODE_PRIVATE
         );
 
-        // Load previously saved settings
         boolean expiryRemindersEnabled =
                 sharedPreferences.getBoolean(
                         KEY_EXPIRY_REMINDERS,
@@ -66,7 +70,8 @@ public class SettingsActivity extends AppCompatActivity {
                 strictMatchingEnabled
         );
 
-        // Save button
+        setupBottomNavigation();
+
         btnSaveSettings.setOnClickListener(view -> {
 
             SharedPreferences.Editor editor =
@@ -91,7 +96,83 @@ public class SettingsActivity extends AppCompatActivity {
             ).show();
         });
 
-        // Return to the previous screen
-        btnBackHome.setOnClickListener(view -> finish());
+        btnBackHome.setOnClickListener(view -> {
+
+            Intent intent = new Intent(
+                    SettingsActivity.this,
+                    MainActivity.class
+            );
+
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (bottomNavigation != null) {
+            bottomNavigation.setSelectedItemId(
+                    R.id.navSettings
+            );
+        }
+    }
+
+    private void setupBottomNavigation() {
+
+        bottomNavigation.setSelectedItemId(
+                R.id.navSettings
+        );
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.navHome) {
+
+                Intent intent = new Intent(
+                        SettingsActivity.this,
+                        MainActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+
+                return true;
+            }
+
+            if (itemId == R.id.navPantry) {
+
+                Intent intent = new Intent(
+                        SettingsActivity.this,
+                        PantryActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+
+                return true;
+            }
+
+            if (itemId == R.id.navRecipes) {
+
+                Intent intent = new Intent(
+                        SettingsActivity.this,
+                        RecipesActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+
+                return true;
+            }
+
+            if (itemId == R.id.navSettings) {
+                return true;
+            }
+
+            return false;
+        });
     }
 }

@@ -9,11 +9,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnPantry;
     private Button btnRecipes;
     private Button btnSettings;
+
+    private BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +44,20 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        // Open the Room database
         AppDatabase database =
                 AppDatabase.getInstance(this);
 
-        // Insert the starter recipes only if the recipe table is empty
         RecipeSeeder.seedRecipes(database);
 
-        // Connect buttons
         btnPantry = findViewById(R.id.btnPantry);
         btnRecipes = findViewById(R.id.btnRecipes);
         btnSettings = findViewById(R.id.btnSettings);
 
-        // Open Pantry screen
+        bottomNavigation = findViewById(R.id.bottomNavigation);
+
+        // Highlight Home because this is the Home screen
+        bottomNavigation.setSelectedItemId(R.id.navHome);
+
         btnPantry.setOnClickListener(view -> {
 
             Intent intent = new Intent(
@@ -63,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Open Suggested Recipes screen
         btnRecipes.setOnClickListener(view -> {
 
             Intent intent = new Intent(
@@ -74,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Open Settings screen
         btnSettings.setOnClickListener(view -> {
 
             Intent intent = new Intent(
@@ -83,6 +86,50 @@ public class MainActivity extends AppCompatActivity {
             );
 
             startActivity(intent);
+        });
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.navHome) {
+                return true;
+            }
+
+            if (itemId == R.id.navPantry) {
+
+                Intent intent = new Intent(
+                        MainActivity.this,
+                        PantryActivity.class
+                );
+
+                startActivity(intent);
+                return true;
+            }
+
+            if (itemId == R.id.navRecipes) {
+
+                Intent intent = new Intent(
+                        MainActivity.this,
+                        RecipesActivity.class
+                );
+
+                startActivity(intent);
+                return true;
+            }
+
+            if (itemId == R.id.navSettings) {
+
+                Intent intent = new Intent(
+                        MainActivity.this,
+                        SettingsActivity.class
+                );
+
+                startActivity(intent);
+                return true;
+            }
+
+            return false;
         });
     }
 }
