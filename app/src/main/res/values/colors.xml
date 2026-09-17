@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+
+    <!-- Smart Pantry Manager Brand Colours -->
+    <color name="cream_background">#FFF8ED</color>
+    <color name="cream_light">#FFFCF6</color>
+
+    <color name="dark_green">#244A35</color>
+    <color name="deep_green">#193D2B</color>
+
+    <color name="burnt_orange">#C96A32</color>
+    <color name="burnt_orange_dark">#A95125</color>
+    <color name="soft_orange">#F3D4BE</color>
+
+    <!-- Cards and surfaces -->
+    <color name="card_white">#FFFFFFFF</color>
+    <color name="border_cream">#EADFCC</color>
+
+    <!-- Text -->
+    <color name="warm_brown">#6B5142</color>
+    <color name="text_primary">#2D332E</color>
+    <color name="text_secondary">#6B625A</color>
+    <color name="text_light">#8B8178</color>
+
+    <!-- Utility colours -->
+    <color name="delete_red">#B94A3E</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+
 </resources>

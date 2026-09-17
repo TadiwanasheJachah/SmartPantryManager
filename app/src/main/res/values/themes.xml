@@ -1,9 +1,35 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
+
     <style name="Base.Theme.SmartPantryManager" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!-- Main brand colours -->
+        <item name="colorPrimary">@color/burnt_orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="colorPrimaryContainer">@color/soft_orange</item>
+        <item name="colorOnPrimaryContainer">@color/dark_green</item>
+
+        <!-- Secondary brand colour -->
+        <item name="colorSecondary">@color/dark_green</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="colorSecondaryContainer">@color/cream_light</item>
+        <item name="colorOnSecondaryContainer">@color/dark_green</item>
+
+        <!-- App surfaces -->
+        <item name="android:colorBackground">@color/cream_background</item>
+        <item name="colorSurface">@color/cream_background</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+
+        <!-- Android system bars -->
+        <item name="android:navigationBarColor">@color/card_white</item>
+        <item name="android:statusBarColor">@color/cream_background</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
     </style>
 
     <style name="Theme.SmartPantryManager" parent="Base.Theme.SmartPantryManager" />
+
 </resources>

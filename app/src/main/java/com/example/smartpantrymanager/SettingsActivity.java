@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Switch;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Switch switchExpiryReminders;
-    private Switch switchStrictMatching;
+    private MaterialSwitch switchExpiryReminders;
+    private MaterialSwitch switchStrictMatching;
     private Button btnSaveSettings;
     private Button btnBackHome;
     private BottomNavigationView bottomNavigation;

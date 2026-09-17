@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +15,8 @@ import java.util.Calendar;
 
 public class AddEditIngredientActivity extends AppCompatActivity {
 
+    private TextView tvIngredientFormTitle;
+    private TextView tvIngredientFormSubtitle;
     private EditText etIngredientName;
     private EditText etQuantity;
     private EditText etExpiryDate;
@@ -39,6 +42,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_ingredient);
 
+        tvIngredientFormTitle = findViewById(R.id.tvIngredientFormTitle);
+        tvIngredientFormSubtitle = findViewById(R.id.tvIngredientFormSubtitle);
         etIngredientName = findViewById(R.id.etIngredientName);
         etQuantity = findViewById(R.id.etQuantity);
         etExpiryDate = findViewById(R.id.etExpiryDate);
@@ -62,6 +67,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         if (ingredientId != -1) {
             loadIngredientForEditing();
+            tvIngredientFormTitle.setText("Edit Ingredient");
+            tvIngredientFormSubtitle.setText("Update the details for this pantry item.");
             btnSaveIngredient.setText("Update Ingredient");
         }
 

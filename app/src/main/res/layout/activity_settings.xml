@@ -6,105 +6,189 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FAFAFA">
+    android:background="@color/cream_background">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:paddingLeft="22dp"
+            android:paddingTop="22dp"
+            android:paddingRight="22dp"
+            android:paddingBottom="28dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="Settings"
-                android:textColor="#176B2C"
-                android:textSize="28sp"
+                android:textColor="@color/dark_green"
+                android:textSize="30sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="28dp"
-                android:text="Manage your Smart Pantry preferences."
-                android:textColor="#555555"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Expiry Reminders"
-                android:textColor="#222222"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <Switch
-                android:id="@+id/switchExpiryReminders"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Enable expiry reminders"
-                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:layout_marginBottom="28dp"
-                android:text="When enabled, the app can keep your reminder preference saved."
-                android:textColor="#666666"
-                android:textSize="14sp" />
+                android:layout_marginBottom="24dp"
+                android:text="Personalise your Smart Pantry experience."
+                android:textColor="@color/warm_brown"
+                android:textSize="15sp" />
 
-            <TextView
+            <!-- EXPIRY PREFERENCES -->
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Recipe Preferences"
-                android:textColor="#222222"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/card_white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/border_cream"
+                app:strokeWidth="1dp">
 
-            <Switch
-                android:id="@+id/switchStrictMatching"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="EXPIRY PREFERENCES"
+                        android:textColor="@color/burnt_orange"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.10" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="Expiry reminder preference"
+                        android:textColor="@color/dark_green"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchExpiryReminders"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Save reminder preference"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Your choice is saved on this device for future use."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- RECIPE MATCHING -->
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:checked="true"
-                android:text="Use strict ingredient matching"
-                android:textSize="16sp" />
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@color/card_white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/border_cream"
+                app:strokeWidth="1dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="32dp"
-                android:text="Only suggest recipes when all required ingredients are available."
-                android:textColor="#666666"
-                android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
 
-            <Button
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="RECIPE MATCHING"
+                        android:textColor="@color/burnt_orange"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.10" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="Strict ingredient matching"
+                        android:textColor="@color/dark_green"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchStrictMatching"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:checked="true"
+                        android:enabled="false"
+                        android:text="Strict matching is active"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Recipes are only suggested when every required ingredient is available in the required quantity."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSaveSettings"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6F50B5"
+                android:layout_height="54dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="Save Settings"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/burnt_orange"
+                app:cornerRadius="16dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBackHome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
                 android:layout_marginTop="12dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="Back to Home"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textColor="@color/burnt_orange"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/cream_background"
+                app:cornerRadius="16dp"
+                app:strokeColor="@color/burnt_orange"
+                app:strokeWidth="1dp" />
 
         </LinearLayout>
 
@@ -114,10 +198,14 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:itemIconTint="#6A1B9A"
-        app:itemTextColor="#6A1B9A"
+        android:background="@color/card_white"
+        android:elevation="10dp"
+        app:itemActiveIndicatorStyle="@null"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
         app:labelVisibilityMode="labeled"
+        app:itemTextAppearanceActive="@style/BottomNavTextAppearance"
+        app:itemTextAppearanceInactive="@style/BottomNavTextAppearance"
         app:menu="@menu/bottom_navigation_menu" />
 
 </LinearLayout>

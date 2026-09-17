@@ -4,22 +4,22 @@
 
     <item
         android:id="@+id/navHome"
-        android:icon="@android:drawable/ic_menu_view"
+        android:icon="@drawable/ic_nav_home"
         android:title="Home" />
 
     <item
         android:id="@+id/navPantry"
-        android:icon="@android:drawable/ic_menu_agenda"
+        android:icon="@drawable/ic_nav_pantry"
         android:title="Pantry" />
 
     <item
         android:id="@+id/navRecipes"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_nav_recipes"
         android:title="Recipes" />
 
     <item
         android:id="@+id/navSettings"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@drawable/ic_nav_settings"
         android:title="Settings" />
 
 </menu>

@@ -1,67 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/cream_background"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingLeft="22dp"
+        android:paddingTop="28dp"
+        android:paddingRight="22dp"
+        android:paddingBottom="32dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvIngredientFormTitle"
+            android:text="Add Ingredient"
+            android:textColor="@color/dark_green"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="28dp"
+            android:id="@+id/tvIngredientFormSubtitle"
+            android:text="Add something new to your pantry."
+            android:textColor="@color/warm_brown"
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add / Edit Ingredient"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="7dp"
+            android:text="Ingredient name"
+            android:textColor="@color/dark_green"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etIngredientName"
             android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="e.g. Chicken"
+            android:inputType="textCapWords"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_light"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Ingredient name"
-            android:inputType="text"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Quantity"
+            android:textColor="@color/dark_green"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etQuantity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Quantity"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="e.g. 200"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="12dp" />
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_light"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Unit"
+            android:textColor="@color/dark_green"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spUnit"
             android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_field"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Expiry date"
+            android:textColor="@color/dark_green"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etExpiryDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Expiry date"
-            android:focusable="false"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_field"
             android:clickable="true"
-            android:layout_marginBottom="20dp" />
+            android:focusable="false"
+            android:hint="Tap to choose a date"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_light"
+            android:textSize="16sp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveIngredient"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
+            android:layout_marginTop="30dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="Save Ingredient"
-            android:layout_marginBottom="12dp" />
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/burnt_orange"
+            app:cornerRadius="16dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:layout_height="54dp"
+            android:layout_marginTop="12dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/burnt_orange"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/cream_background"
+            app:cornerRadius="16dp"
+            app:strokeColor="@color/burnt_orange"
+            app:strokeWidth="1dp" />
 
     </LinearLayout>
 

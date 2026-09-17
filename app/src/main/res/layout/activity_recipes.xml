@@ -5,46 +5,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FAFAFA">
+    android:background="@color/cream_background">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:paddingLeft="22dp"
+            android:paddingTop="22dp"
+            android:paddingRight="22dp"
+            android:paddingBottom="28dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Suggested Recipes"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="#176B2C"
-                android:layout_marginTop="16dp" />
+                android:textColor="@color/dark_green"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Recipes based on ingredients currently available in your pantry."
-                android:textSize="15sp"
-                android:textColor="#666666"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginTop="6dp"
+                android:text="Made for what you already have."
+                android:textColor="@color/warm_brown"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_rounded_card"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SMART MATCHING"
+                    android:textColor="@color/burnt_orange"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.10" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="Recipes you can make now"
+                    android:textColor="@color/dark_green"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Every suggested recipe uses ingredients and quantities currently available in your pantry."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="2dp" />
+
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
                 android:text="Your Recipe Suggestions"
-                android:textSize="19sp"
-                android:textStyle="bold"
-                android:textColor="#222222"
-                android:layout_marginBottom="12dp" />
+                android:textColor="@color/dark_green"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/recipeContainer"
@@ -56,22 +95,31 @@
                 android:id="@+id/txtNoRecipes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No matching recipes yet. Add more ingredients to your pantry to receive suggestions."
-                android:textSize="15sp"
-                android:textColor="#777777"
+                android:background="@drawable/bg_rounded_card"
                 android:gravity="center"
-                android:padding="24dp"
+                android:lineSpacingExtra="3dp"
+                android:padding="28dp"
+                android:text="No matching recipes yet.\nAdd more ingredients to your pantry and check again."
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp"
                 android:visibility="gone" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBackToPantry"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginTop="22dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="Back to Pantry"
                 android:textAllCaps="false"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="#6F50B5"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/burnt_orange"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/cream_background"
+                app:cornerRadius="16dp"
+                app:strokeColor="@color/burnt_orange"
+                app:strokeWidth="1dp" />
 
         </LinearLayout>
 
@@ -81,10 +129,14 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:itemIconTint="#6A1B9A"
-        app:itemTextColor="#6A1B9A"
+        android:background="@color/card_white"
+        android:elevation="10dp"
+        app:itemActiveIndicatorStyle="@null"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
         app:labelVisibilityMode="labeled"
+        app:itemTextAppearanceActive="@style/BottomNavTextAppearance"
+        app:itemTextAppearanceInactive="@style/BottomNavTextAppearance"
         app:menu="@menu/bottom_navigation_menu" />
 
 </LinearLayout>

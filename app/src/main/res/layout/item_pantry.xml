@@ -3,59 +3,103 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_marginBottom="8dp"
-    android:background="#FFFFFF">
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_rounded_card"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvItemName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingredient"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:textColor="#212121" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ingredient"
+            android:textColor="@color/dark_green"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="●"
+            android:textColor="@color/burnt_orange"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvItemQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
         android:text="2 kg"
-        android:textSize="14sp"
-        android:textColor="#666666"
-        android:layout_marginTop="4dp" />
+        android:textColor="@color/burnt_orange"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvItemExpiry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="Expires: 20/09/2026"
-        android:textSize="13sp"
-        android:textColor="#777777"
-        android:layout_marginTop="4dp" />
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/border_cream" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"
-        android:layout_marginTop="12dp">
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEditItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="48dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
             android:text="Edit"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/burnt_orange"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/cream_background"
+            app:cornerRadius="14dp"
+            app:strokeColor="@color/burnt_orange"
+            app:strokeWidth="1dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDeleteItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="96dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
             android:text="Delete"
             android:textAllCaps="false"
-            android:layout_marginStart="8dp" />
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/delete_red"
+            app:cornerRadius="14dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
 
     </LinearLayout>
 

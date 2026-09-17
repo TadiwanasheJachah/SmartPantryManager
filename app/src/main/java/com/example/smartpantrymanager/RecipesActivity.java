@@ -3,6 +3,8 @@ package com.example.smartpantrymanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -328,98 +330,41 @@ public class RecipesActivity extends AppCompatActivity {
         return normalized;
     }
 
-    private void addRecipeToScreen(
-            RecipeEntity recipe
-    ) {
+    private void addRecipeToScreen(RecipeEntity recipe) {
 
-        LinearLayout recipeCard =
-                new LinearLayout(this);
+        View recipeCard = LayoutInflater.from(this)
+                .inflate(R.layout.item_recipe, recipeContainer, false);
 
-        recipeCard.setOrientation(
-                LinearLayout.VERTICAL
-        );
-
-        int padding =
-                (int) (16 * getResources()
-                        .getDisplayMetrics()
-                        .density);
-
-        recipeCard.setPadding(
-                padding,
-                padding,
-                padding,
-                padding
-        );
-
-        LinearLayout.LayoutParams cardParams =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-
-        cardParams.setMargins(
-                0,
-                0,
-                0,
-                padding
-        );
-
-        recipeCard.setLayoutParams(cardParams);
-
-        recipeCard.setBackgroundColor(
-                getColor(android.R.color.white)
-        );
+        ImageView recipeImage =
+                recipeCard.findViewById(R.id.imgRecipe);
 
         TextView recipeName =
-                new TextView(this);
-
-        recipeName.setText(recipe.getName());
-        recipeName.setTextSize(18);
-
-        recipeName.setTextColor(
-                getColor(android.R.color.black)
-        );
-
-        recipeName.setTypeface(
-                null,
-                android.graphics.Typeface.BOLD
-        );
+                recipeCard.findViewById(R.id.tvRecipeCardName);
 
         TextView ingredientText =
-                new TextView(this);
+                recipeCard.findViewById(R.id.tvRecipeCardIngredients);
+
+        TextView actionText =
+                recipeCard.findViewById(R.id.tvRecipeCardAction);
+
+        recipeImage.setImageResource(
+                getRecipeImage(recipe.getName())
+        );
+
+        recipeName.setText(recipe.getName());
 
         ingredientText.setText(
-                formatRequirements(
-                        recipe.getRequirements()
-                )
+                formatRequirements(recipe.getRequirements())
         );
 
-        ingredientText.setTextSize(14);
+        actionText.setText("View recipe  >");
 
-        ingredientText.setPadding(
-                0,
-                padding / 2,
-                0,
-                padding / 2
-        );
-
-        TextView tapText =
-                new TextView(this);
-
-        tapText.setText("Tap to view recipe");
-        tapText.setTextSize(13);
-
-        recipeCard.addView(recipeName);
-        recipeCard.addView(ingredientText);
-        recipeCard.addView(tapText);
-
-        recipeCard.setOnClickListener(view ->
-                openRecipeDetails(recipe)
+        recipeCard.setOnClickListener(
+                view -> openRecipeDetails(recipe)
         );
 
         recipeContainer.addView(recipeCard);
     }
-
     private String formatRequirements(
             String requirements
     ) {
@@ -486,6 +431,11 @@ public class RecipesActivity extends AppCompatActivity {
                 recipe.getInstructions()
         );
 
+        intent.putExtra(
+                "recipe_image",
+                getRecipeImage(recipe.getName())
+        );
+
         startActivity(intent);
     }
 
@@ -522,6 +472,72 @@ public class RecipesActivity extends AppCompatActivity {
         return builder.toString();
     }
 
+    private int getRecipeImage(String recipeName) {
+
+        if (recipeName == null) {
+            return R.drawable.recipe_placeholder;
+        }
+
+        switch (recipeName) {
+
+            case "Scrambled Eggs":
+                return R.drawable.recipe_scrambled_eggs;
+
+            case "Cheese Omelette":
+                return R.drawable.recipe_cheese_omelette;
+
+            case "French Toast":
+                return R.drawable.recipe_french_toast;
+
+            case "Cheese Toast":
+                return R.drawable.recipe_cheese_toast;
+
+            case "Tomato Sandwich":
+                return R.drawable.recipe_tomato_sandwich;
+
+            case "Chicken and Rice":
+                return R.drawable.recipe_chicken_rice;
+
+            case "Tomato Rice":
+                return R.drawable.recipe_tomato_rice;
+
+            case "Chicken Pasta":
+                return R.drawable.recipe_chicken_pasta;
+
+            case "Cheesy Pasta":
+                return R.drawable.recipe_cheesy_pasta;
+
+            case "Banana Oats":
+                return R.drawable.recipe_banana_oats;
+
+            case "Banana Toast":
+                return R.drawable.recipe_banana_toast;
+
+            case "Potato and Egg Breakfast":
+                return R.drawable.recipe_potato_egg_breakfast;
+
+            case "Chicken and Potato Meal":
+                return R.drawable.recipe_chicken_potato;
+
+            case "Simple Fruit Bowl":
+                return R.drawable.recipe_fruit_bowl;
+
+            case "Egg Sandwich":
+                return R.drawable.recipe_egg_sandwich;
+
+            case "Apple Oats":
+                return R.drawable.recipe_apple_oats;
+
+            case "Chicken Cheese Toast":
+                return R.drawable.recipe_chicken_cheese_toast;
+
+            case "Potato Cheese Bake":
+                return R.drawable.recipe_potato_cheese_bake;
+
+            default:
+                return R.drawable.recipe_placeholder;
+        }
+    }
     private String capitalize(String text) {
 
         if (text == null || text.isEmpty()) {
